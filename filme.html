@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="cliente">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="pt-br">
+	<title>Filmes</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/ui-bootstrap-tpls-0.14.1.min.js"></script>
+	<script src="control/filmeControl.js"></script>
+</head>
+<body ng-controller="filmeControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+    
+		<div class="panel-heading">Cadastro de Filmes</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">					
+			    	<form name="clienteForm" class="css-form" ng-submit="clienteForm.$valid && salvar()" novalidate>
+				    	<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>
+						<div ng-show="clienteForm.$submitted">
+						     <div ng-show="clienteForm.nome.$error.required">Preencha o nome</div>
+	      				     <div ng-show="clienteForm.nome.$error.minlength">Nome precisa ter pelo menos 10 caracteres</div>	      				
+	    				</div>    				
+						<br>
+						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="submit" class="btn btn-success" ng-click="salvar()">Salvar</button>
+						<button type="button" class="btn btn-danger" ng-click="excluir()">Excluir</button>
+						<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
+						<hr/>
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputCodigo">Codigo</label>
+					    <input type="number" disabled="true" class="form-control" ng-model="cliente.codigo" placeholder="Codigo">
+					  </div>
+					  
+					  <div class="form-group col-md-4">
+					    <label for="exampleInputNome">Nome</label>
+					    <input type="text" class="form-control" ng-model="cliente.nome" name="nome" placeholder="Insira o Nome" required="" ng-minlength="10"/>
+					  </div>	
+					<div class="form-group col-md-6">
+					    <label for="exampleInputEndereco">Endereço</label>
+					    <input type="text" class="form-control" ng-model="cliente.endereco" name="endereco" placeholder="Insira o Endereço"/>
+					  </div>	
+				</div>
+			    <div role="tabpanel" class="tab-pane" id="dados"></div>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Codigo</th><th>Nome</th><th>Endereço</th>
+
+			    		<tr ng-repeat="cliente in clientes | filter:criterio" ng-click="seleciona(clienteTabela);">
+			    			<td>{{clienteTabela.codigo}}</td><td>{{clienteTabela.nome}}<td>{{clienteTabela.endereco}}
+							</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
